@@ -77,7 +77,7 @@ public sealed partial class ConverterTests
         Assert.Contains("IDS4ALL", error);
     }
 
-    private static (int Code, string Output, string Error) Run(params string[] arguments)
+    internal static (int Code, string Output, string Error) Run(params string[] arguments)
     {
         using var output = new StringWriter();
         using var error = new StringWriter();
