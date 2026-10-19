@@ -96,6 +96,19 @@ Tests that need Python skip when `IDS4ALL_PYTHON_DLL` and `PYTHONNET_PYDLL` are 
 | `IDS4ALL_FUZZ_SEED` | Seed of the random sheets. |
 | `IDS4ALL_FUZZ_RUNS` | Number of random cases. Each random test uses a part of it. |
 
+## Differences from the Python version
+
+The C# version gives the same IDS files for valid input. For invalid input it stops with a clear message
+where Python stops with a traceback or later.
+
+- A sheet where empty AND values were removed from some columns only gives an `ImportException`. Python stops with `IndexError`.
+- A description, URI, cardinality, relation or data type with several values or a restriction gives an error when the facet is created. Python fails when it writes the file.
+- A length restriction above the `int` range gives an error. Python takes any integer.
+- A number as column name, a number as `Sheet name` and a `Skipped rows` value that is not a whole number give an error or are read as text. Python stops with an error.
+- `Upper` and `Lower` use the Unicode data of Python 3.14. Python 3.12 has older data and differs for a few characters that Unicode 16 added.
+- ClosedXML and openpyxl read a few special cells in another way. The cases are tests in
+  `tests/IDS4ALL.Tests/Excel/XlsxReaderDifferenceTests.cs`.
+
 ## Project structure
 
 | Project | Content |
